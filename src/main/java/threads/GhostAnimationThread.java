@@ -25,7 +25,7 @@ public class GhostAnimationThread extends Thread {
                 ghost.updateAnimationFrame();
             }
             try {
-                Thread.sleep(100);
+                Thread.sleep(275);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

@@ -25,7 +25,7 @@ public class PacmanAnimationThread extends Thread {
                 pacman.updateAnimationFrame();
             }
             try {
-                Thread.sleep(200);
+                Thread.sleep(275);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

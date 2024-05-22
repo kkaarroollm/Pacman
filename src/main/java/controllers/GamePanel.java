@@ -1,7 +1,7 @@
 package controllers;
 
-import models.Ghost;
-import models.Pacman;
+import constants.Direction;
+import models.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,22 +12,27 @@ import java.util.List;
 public class GamePanel extends JPanel {
     final Game game;
     private final Pacman pacman;
+    private final Board board;
     private final List<Ghost> ghosts;
     private int score;
     private int lives;
     private long gameTime;
 
-    public GamePanel(Game game, Pacman pacman, List<Ghost> ghosts) {
+
+    public GamePanel(Game game, Pacman pacman, List<Ghost> ghosts, Board board) {
         this.game = game;
         this.pacman = pacman;
         this.ghosts = ghosts;
         this.score = 0;
         this.lives = 3;
         this.gameTime = 0;
+        this.board = board;
 
-        setPreferredSize(new Dimension(800, 600));
+
         setFocusable(true);
+
         requestFocusInWindow();
+
 
         this.addKeyListener(new KeyAdapter() {
             @Override
@@ -46,14 +51,14 @@ public class GamePanel extends JPanel {
         super.paintComponent(g);
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, getWidth(), getHeight());
-
+        drawBoard(g);
         drawPacman(g);
         drawGhosts(g);
-        drawHUD(g);
+//        drawHUD(g);
     }
 
     private void drawPacman(Graphics g) {
-        g.drawImage(pacman.getCurrentImage(), pacman.getX(), pacman.getY(), this);
+        g.drawImage(pacman.getCurrentImage(), (int)pacman.getX(), (int)pacman.getY(), this);
     }
 
     private void drawGhosts(Graphics g) {
@@ -62,6 +67,7 @@ public class GamePanel extends JPanel {
         }
     }
 
+
     private void drawHUD(Graphics g) {
         g.setColor(Color.WHITE);
         g.setFont(new Font("Arial", Font.BOLD, 14));
@@ -69,6 +75,10 @@ public class GamePanel extends JPanel {
         g.drawString("Score: " + score, 10, 20);
         g.drawString("Lives: " + lives, 10, 40);
         g.drawString("Time: " + gameTime / 1000 + "s", 10, 60);
+    }
+
+    private void drawBoard(Graphics g){
+        board.draw(g);
     }
 
     public void updateScore(int newScore) {
@@ -88,35 +98,59 @@ public class GamePanel extends JPanel {
 
     private void keyInputPressed(KeyEvent e) {
         int key = e.getKeyCode();
+
         switch (key) {
-            case KeyEvent.VK_LEFT:
-                this.pacman.setDirection(-5, 0);
-                break;
-            case KeyEvent.VK_RIGHT:
-                this.pacman.setDirection(5, 0);
-                break;
             case KeyEvent.VK_UP:
-                this.pacman.setDirection(0, -5);
+                pacman.setCurrentDirection(Direction.UP);
                 break;
             case KeyEvent.VK_DOWN:
-                this.pacman.setDirection(0, 5);
+                pacman.setCurrentDirection(Direction.DOWN);
+                break;
+            case KeyEvent.VK_LEFT:
+                pacman.setCurrentDirection(Direction.LEFT);
+                break;
+            case KeyEvent.VK_RIGHT:
+                pacman.setCurrentDirection(Direction.RIGHT);
                 break;
         }
+
         pacman.move();
         repaint();
     }
 
     private void keyInputReleased(KeyEvent e) {
         int key = e.getKeyCode();
+
         switch (key) {
-            case KeyEvent.VK_LEFT:
-            case KeyEvent.VK_RIGHT:
             case KeyEvent.VK_UP:
             case KeyEvent.VK_DOWN:
-                this.pacman.setDirection(0, 0);
+            case KeyEvent.VK_LEFT:
+            case KeyEvent.VK_RIGHT:
+                pacman.setCurrentDirection(Direction.NONE);
                 break;
         }
-        pacman.move();
-        repaint();
     }
+
+//    private void checkCollisions() {
+//        List<Grid> toRemove = new ArrayList<>();
+//
+//        for (Grid obj : Grid) {
+//            if (pacman.isCollide(obj)) {
+//                if (obj instanceof Wall) {
+//                    // Handle wall collision
+//                    handleWallCollision();
+//                } else if (obj instanceof Cookie) {
+//                    // Handle cookie collision
+//                    toRemove.add(obj);
+//                    // Increase score or other game logic
+//                } else if (obj instanceof PowerUp) {
+//                    // Handle power-up collision
+//                    toRemove.add(obj);
+//                    // Activate power-up
+//                }
+//            }
+//        }
+//
+//        Grid.removeAll(toRemove);
+//    }
 }

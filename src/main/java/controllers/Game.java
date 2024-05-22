@@ -1,7 +1,6 @@
 package controllers;
 
-import models.Ghost;
-import models.Pacman;
+import models.*;
 import threads.*;
 
 import javax.swing.*;
@@ -18,16 +17,27 @@ public class Game extends JFrame {
     private final ScoreUpdateThread scoreUpdateThread;
     private final LifeCounterThread lifeCounterThread;
 
+    public static final int BLOCK_SIZE = 24;
+    public static final int NUM_COLUMNS = 20;
+    private static final int NUM_ROWS = 20;
+    public static final int SCREEN_WIDTH = BLOCK_SIZE * NUM_COLUMNS;
+    public static final int SCREEN_HEIGHT = BLOCK_SIZE * NUM_ROWS;
+
     public Game() {
         setTitle("Pacman");
-        setSize(800, 600);
+        setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(false);
 
-        Pacman pacman = new Pacman();
         List<Ghost> ghosts = Arrays.asList(new Ghost(), new Ghost(), new Ghost());
+        Board board = new Board(BLOCK_SIZE);
+        WallDetector wallDetector = new WallDetector(board.getWalls());
+        Pacman pacman = new Pacman(wallDetector);
 
-        GamePanel gamePanel = new GamePanel(this, pacman, ghosts);
+
+        GamePanel gamePanel = new GamePanel(this, pacman, ghosts, board);
         getContentPane().add(gamePanel);
+
 
         pacmanAnimationThread = new PacmanAnimationThread(pacman, lock);
         pacmanAnimationThread.start();

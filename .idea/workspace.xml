@@ -5,13 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f4768cf6-5215-473b-8ccc-848325ad4bde" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/ghost/ghost1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/ghost/ghost2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/GamePanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/models/Direction.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/models/Ghost.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/models/Ghost.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/models/Movable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/models/Movable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/models/Pacman.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/models/Pacman.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/threads/GhostAnimationThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/threads/GhostAnimationThread.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/threads/PacmanAnimationThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/threads/PacmanAnimationThread.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/pacman/pacman1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/pacman/pacman2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/pacman/pacman3.png" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,11 +39,16 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 7
-}]]></component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
   <component name="ProjectId" id="2gjx1hBXlu7N5z122hjZl5A5MpQ" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -51,14 +64,18 @@
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "editing.templates",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources/images/" />
+      <recent name="$PROJECT_DIR$/src/main/resources/images.ghost" />
       <recent name="$PROJECT_DIR$/src/main/resources/images/pacman" />
     </key>
   </component>
@@ -90,7 +107,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1716224574894</updated>
-      <workItem from="1716224575891" duration="19687000" />
+      <workItem from="1716224575891" duration="62190000" />
+      <workItem from="1716380857464" duration="21828000" />
     </task>
     <servers />
   </component>
