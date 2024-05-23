@@ -7,13 +7,13 @@ import java.awt.*;
 import java.util.Random;
 
 public class Ghost extends MovableGrid {
-    private final WallDetector wallDetector;
+    private final Board board;
     private final Random random;
     Image[] frames;
 
-    public Ghost(WallDetector wallDetector) {
+    public Ghost(Board board) {
         super(24, 24, 18, 18, 7);
-        this.wallDetector = wallDetector;
+        this.board = board;
         this.random = new Random();
         this.frames = new Image[2];
         frames[0] = new ImageIcon("src/main/resources/images/ghost/ghost1.png").getImage().getScaledInstance(18, 18, Image.SCALE_DEFAULT);
@@ -23,7 +23,7 @@ public class Ghost extends MovableGrid {
 
     @Override
     public void move() {
-        if (!wallDetector.willCollide(this)) {
+        if (!board.checkCollisionWithWalls(this)) {
             switch (getRandomDirection()) {
                 case UP:
                     y -= speed;
@@ -41,7 +41,7 @@ public class Ghost extends MovableGrid {
                     break;
             }
 
-            bounds.setLocation(x, y);
+            this.setLocation(x, y);
             System.out.println("Ghost x: " + x + " y: " + y);
         }
     }

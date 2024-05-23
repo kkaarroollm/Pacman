@@ -4,19 +4,25 @@ import constants.Direction;
 
 import java.awt.*;
 import java.util.*;
-import java.util.List;
 
-public class WallDetector {
+public class CollisionDetector {
     private final int cellSize;
-    private final Map<Point, Wall> grid;
+    Map<Point, Wall> wallsMap;
+    Map<Point, EatableGrid> eatables;
 
-    public WallDetector(List<Wall> walls, int cellSize) {
+    public CollisionDetector(Board board, int cellSize) {
         this.cellSize = cellSize;
-        this.grid = new HashMap<>();
+        this.wallsMap = new HashMap<>();
+        this.eatables = new HashMap<>();
 
-        for (Wall wall : walls) {
-            Point cell = getCell(wall.getBounds().getLocation());
-            grid.putIfAbsent(cell, wall);
+        for (Wall wall : board.getWalls()) {
+            Point cell = getCell(wall.getLocation());
+            wallsMap.put(cell, wall);
+        }
+
+        for (Coin coin : board.getCoins()) {
+            Point cell = getCell(coin.getLocation());
+            eatables.put(cell, coin);
         }
     }
 
@@ -26,7 +32,8 @@ public class WallDetector {
         return new Point(cellX, cellY);
     }
 
-    public boolean willCollide(MovableGrid movable) {
+    public boolean willCollideWithWall(MovableGrid movable) {
+        System.out.println("Checking collision with walls");
         int originalSpeed = movable.getSpeed();
         Direction direction = movable.getCurrentDirection();
 
@@ -36,8 +43,8 @@ public class WallDetector {
 
             boolean collisionDetected = false;
 
-            for (Point cell : nearbyCells(futureBounds)) {
-                Wall cellWall = grid.get(cell);
+            for (Point cell : getNearbyPoints(futureBounds)) {
+                Wall cellWall = wallsMap.get(cell);
                 if (cellWall != null && futureBounds.intersects(cellWall.getBounds())) {
                     collisionDetected = true;
                     break;
@@ -53,7 +60,21 @@ public class WallDetector {
         return true;
     }
 
-    private Iterable<Point> nearbyCells(Rectangle bounds) {
+    public EatableGrid checkAndEatEatables(Pacman pacman) {
+        Point currentPosition = pacman.getLocation();
+        Rectangle pacmanBounds = new Rectangle(currentPosition.x, currentPosition.y, (int) pacman.getWidth(), (int) pacman.getHeight());
+
+        for (Point cell : getNearbyPoints(pacmanBounds)) {
+            EatableGrid eatable = eatables.get(cell);
+            if (eatable != null && pacmanBounds.contains(eatable.getBounds())) {
+                eatables.remove(cell);
+                return eatable;
+            }
+        }
+        return null;
+    }
+
+    private Iterable<Point> getNearbyPoints(Rectangle bounds) {
         return () -> new Iterator<>() {
             int currentX = bounds.x / cellSize;
             int currentY = bounds.y / cellSize;
@@ -67,13 +88,13 @@ public class WallDetector {
 
             @Override
             public Point next() {
-                Point nextCell = new Point(currentX, currentY);
+                Point nextPoint = new Point(currentX, currentY);
                 currentX++;
                 if (currentX > maxX) {
                     currentX = bounds.x / cellSize;
                     currentY++;
                 }
-                return nextCell;
+                return nextPoint;
             }
         };
     }

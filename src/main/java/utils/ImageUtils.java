@@ -24,6 +24,8 @@ public class ImageUtils {
             g2d.drawImage(img, 0, 0, null);
         }
         g2d.dispose();
+        System.out.println("Image rotated");
         return rotatedImage;
+        // check how it works
     }
 }

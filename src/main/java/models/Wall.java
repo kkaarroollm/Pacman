@@ -1,15 +1,19 @@
 package models;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Wall extends Grid {
-    public Wall(int x, int y, int width, int height, BufferedImage image) {
-        super(x, y, width, height, image);
+    private final Image wallImg;
+
+    public Wall(int x, int y, int width, int height) {
+        super(x, y, width, height);
+        this.wallImg = new ImageIcon("src/main/resources/images/map/wallSquare.png").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT);
     }
 
     @Override
     public void draw(Graphics g) {
-        g.drawImage(image, x, y, width, height, null);
+        g.drawImage(wallImg, x, y, width, height, null);
     }
 }

@@ -4,15 +4,13 @@ import models.*;
 import threads.*;
 
 import javax.swing.*;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class Game extends JFrame {
     final Object lock = new Object();
     private final GameLoopThread gameLoopThread;
-    private final PacmanAnimationThread pacmanAnimationThread;
-    private final List<GhostAnimationThread> ghostAnimationThreads;
+    private final AnimationThread animationThread;
     private final GameTimerThread gameTimerThread;
     private final ScoreUpdateThread scoreUpdateThread;
     private final LifeCounterThread lifeCounterThread;
@@ -26,24 +24,19 @@ public class Game extends JFrame {
         setResizable(true);
 
         Board board = new Board();
-        WallDetector wallDetector = new WallDetector(board.getWalls(), BLOCK_SIZE);
-        List<Ghost> ghosts = Arrays.asList(new Ghost(wallDetector), new Ghost(wallDetector), new Ghost(wallDetector));
-        Pacman pacman = new Pacman(wallDetector);
+//        CollisionDetector collisionDetector = new CollisionDetector(board.getWalls(), board.getCoins(), BLOCK_SIZE);
 
+        // Movable objects needs to contain a WallDetector object
+        List<Ghost> ghosts = Arrays.asList(new Ghost(board), new Ghost(board), new Ghost(board));
+        Pacman pacman = new Pacman(board);
 
         GamePanel gamePanel = new GamePanel(this, pacman, ghosts, board);
         getContentPane().add(gamePanel);
 
 
-        pacmanAnimationThread = new PacmanAnimationThread(pacman, lock);
-        pacmanAnimationThread.start();
+        animationThread = new AnimationThread(pacman, ghosts, board.getCoins(), lock);
+        animationThread.start();
 
-        ghostAnimationThreads = new ArrayList<>();
-        for (Ghost ghost : ghosts) {
-            GhostAnimationThread ghostAnimationThread = new GhostAnimationThread(ghost, lock);
-            ghostAnimationThread.start();
-            ghostAnimationThreads.add(ghostAnimationThread);
-        }
 
         gameLoopThread = new GameLoopThread(gamePanel, pacman, ghosts, lock);
         gameLoopThread.start();
@@ -68,10 +61,8 @@ public class Game extends JFrame {
 
     public void stopGame() {
         gameLoopThread.stopGame();
-        pacmanAnimationThread.stopAnimation();
-        for (GhostAnimationThread ghostAnimationThread : ghostAnimationThreads) {
-            ghostAnimationThread.stopAnimation();
-        }
+        animationThread.stopAnimation();
+
         gameTimerThread.stopTimer();
         scoreUpdateThread.stopScoreUpdate();
         lifeCounterThread.stopLifeCounter();

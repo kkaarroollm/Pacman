@@ -14,11 +14,11 @@ public class Pacman extends MovableGrid {
     private final int LEFT = Direction.LEFT.ordinal();
     private static final int DEFAULT_SPEED = 8;
 
-    private final WallDetector wallDetector;
+    private final Board board;
 
-    public Pacman(WallDetector wallDetector) {
-        super(24, 24, 22, 22, DEFAULT_SPEED);
-        this.wallDetector = wallDetector;
+    public Pacman(Board board) {
+        super(24, 24, 24, 24, DEFAULT_SPEED);
+        this.board = board;
         try {
             loadAndProcessImages();
         } catch (IOException e) {
@@ -29,7 +29,9 @@ public class Pacman extends MovableGrid {
 
     @Override
     public void move() {
-        if (!wallDetector.willCollide(this)) {
+        if (!board.checkCollisionWithWalls(this)) {
+
+            board.eatEatables(this);
             Point futurePosition = calculateFuturePosition(speed, currentDirection);
             x = futurePosition.x;
             y = futurePosition.y;
@@ -38,7 +40,7 @@ public class Pacman extends MovableGrid {
                 setLastDirection(currentDirection);
             }
 
-            bounds.setLocation(x, y);
+            this.setLocation(x, y);
             this.speed = DEFAULT_SPEED;
             System.out.println("Pacman x: " + x + " y: " + y);
         }

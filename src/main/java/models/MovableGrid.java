@@ -21,17 +21,9 @@ public abstract class MovableGrid extends Grid implements Movable {
 
     public abstract void move();
 
-    public int getSpeed() {
-        return speed;
-    }
-
-    public void setSpeed(int speed) {
-        this.speed = speed;
-    }
-
     protected Point calculateFuturePosition(double speed, Direction currentDirection) {
-        double futureX = getX();
-        double futureY = getY();
+        double futureX = this.x;
+        double futureY = this.y;
 
         switch (currentDirection) {
             case UP:
@@ -60,9 +52,12 @@ public abstract class MovableGrid extends Grid implements Movable {
     }
 
     // getters setters
+    public int getSpeed() {
+        return speed;
+    }
 
-    public int getCurrentFrame() {
-        return currentFrame;
+    public void setSpeed(int speed) {
+        this.speed = speed;
     }
 
     public void setCurrentDirection(Direction currentDirection) {
@@ -75,16 +70,6 @@ public abstract class MovableGrid extends Grid implements Movable {
 
     public void setLastDirection(Direction lastDirection) {
         this.lastDirection = lastDirection;
-    }
-
-    @Override
-    public double getX(){
-        return bounds.x;
-    }
-
-    @Override
-    public double getY(){
-        return bounds.y;
     }
 
     @Override

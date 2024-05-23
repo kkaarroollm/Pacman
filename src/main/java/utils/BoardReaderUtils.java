@@ -1,8 +1,9 @@
 package utils;
 
+import models.BoardElements;
+import models.Coin;
 import models.Wall;
 
-import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -12,18 +13,21 @@ import java.util.List;
 import static controllers.Game.BLOCK_SIZE;
 
 public class BoardReaderUtils {
-    private static final List<Wall> walls = new ArrayList<>();
-    public static List<Wall> readWalls(String filename){
+    public static BoardElements readMap(String filename){
+        List<Wall> walls = new ArrayList<>();
+        List<Coin> coins = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line;
             int row = 0;
             while ((line = reader.readLine()) != null) {
                 for (int col = 0; col < line.length(); col++) {
                     char cell = line.charAt(col);
+                    int x = col * BLOCK_SIZE;
+                    int y = row * BLOCK_SIZE;
                     if (cell == '1') {
-                        int x = col * BLOCK_SIZE;
-                        int y = row * BLOCK_SIZE;
-                        walls.add(new Wall(x, y, BLOCK_SIZE, BLOCK_SIZE, getWallImg()));
+                        walls.add(new Wall(x, y, BLOCK_SIZE, BLOCK_SIZE));
+                    } else if (cell == '0') {
+                        coins.add(new Coin(x, y));
                     }
                 }
                 row++;
@@ -31,15 +35,6 @@ public class BoardReaderUtils {
         } catch (IOException e) {
             System.err.println("Could not read map from file: " + filename);
         }
-        return walls;
-    }
-
-    private static BufferedImage getWallImg() throws IOException{
-        try{
-            return ImageUtils.loadImage("src/main/resources/images/map/wallSquare.png");
-        } catch (IOException e) {
-            System.err.println("Error loading wall image");
-            throw e;
-        }
+        return new BoardElements(walls, coins);
     }
 }

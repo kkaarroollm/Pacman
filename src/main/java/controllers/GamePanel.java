@@ -113,27 +113,4 @@ public class GamePanel extends JPanel {
         pacman.move();
         repaint();
     }
-
-//    private void checkCollisions() {
-//        List<Grid> toRemove = new ArrayList<>();
-//
-//        for (Grid obj : Grid) {
-//            if (pacman.isCollide(obj)) {
-//                if (obj instanceof Wall) {
-//                    // Handle wall collision
-//                    handleWallCollision();
-//                } else if (obj instanceof Cookie) {
-//                    // Handle cookie collision
-//                    toRemove.add(obj);
-//                    // Increase score or other game logic
-//                } else if (obj instanceof PowerUp) {
-//                    // Handle power-up collision
-//                    toRemove.add(obj);
-//                    // Activate power-up
-//                }
-//            }
-//        }
-//
-//        Grid.removeAll(toRemove);
-//    }
 }

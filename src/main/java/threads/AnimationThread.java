@@ -1,28 +1,28 @@
 package threads;
 
-import controllers.GamePanel;
+import models.Coin;
 import models.Ghost;
 import models.Pacman;
 
 import java.util.List;
 
-public class GameLoopThread extends Thread {
-    private final GamePanel gamePanel;
+public class AnimationThread extends Thread {
     private final Pacman pacman;
     private final List<Ghost> ghosts;
+    private final List<Coin> coins;
     private final Object lock;
     private boolean running;
 
-    public GameLoopThread(GamePanel gamePanel, Pacman pacman, List<Ghost> ghosts, Object lock) {
-        this.gamePanel = gamePanel;
+    public AnimationThread(Pacman pacman, List<Ghost> ghosts, List<Coin> coins, Object lock) {
         this.pacman = pacman;
         this.ghosts = ghosts;
+        this.coins = coins;
         this.lock = lock;
         this.running = true;
-        setName("GameLoopThread");
+        setName("AnimationThread");
     }
 
-    public void stopGame() {
+    public void stopAnimation() {
         running = false;
     }
 
@@ -30,18 +30,22 @@ public class GameLoopThread extends Thread {
     public void run() {
         while (running) {
             synchronized (lock) {
-                updateGame();
+                pacman.updateAnimationFrame();
+
+                for (Ghost ghost : ghosts) {
+                    ghost.updateAnimationFrame();
+                }
+
+                for (Coin coin : coins) {
+                    coin.updateAnimationFrame();
+                }
+
             }
             try {
-                Thread.sleep(100);
+                Thread.sleep(120);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
-    }
-
-    private void updateGame() {
-        pacman.move();
-        gamePanel.repaint();
     }
 }
