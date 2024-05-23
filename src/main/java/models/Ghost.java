@@ -12,12 +12,12 @@ public class Ghost extends MovableGrid {
     Image[] frames;
 
     public Ghost(WallDetector wallDetector) {
-        super(24, 24, 22, 22, 7);
+        super(24, 24, 18, 18, 7);
         this.wallDetector = wallDetector;
         this.random = new Random();
         this.frames = new Image[2];
-        frames[0] = new ImageIcon("src/main/resources/images/ghost/ghost1.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT);
-        frames[1] = new ImageIcon("src/main/resources/images/ghost/ghost2.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT);
+        frames[0] = new ImageIcon("src/main/resources/images/ghost/ghost1.png").getImage().getScaledInstance(18, 18, Image.SCALE_DEFAULT);
+        frames[1] = new ImageIcon("src/main/resources/images/ghost/ghost2.png").getImage().getScaledInstance(18, 18, Image.SCALE_DEFAULT);
 
     }
 

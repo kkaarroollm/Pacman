@@ -1,5 +1,7 @@
 package models;
 
+import constants.Direction;
+
 import java.awt.*;
 import java.util.*;
 import java.util.List;
@@ -25,22 +27,39 @@ public class WallDetector {
     }
 
     public boolean willCollide(MovableGrid movable) {
-        Point futurePosition = movable.calculateFuturePosition(movable.getSpeed(), movable.getCurrentDirection());
-        Rectangle futureBounds = new Rectangle(futurePosition.x, futurePosition.y, (int) movable.getWidth(), (int) movable.getHeight());
+        int originalSpeed = movable.getSpeed();
+        Direction direction = movable.getCurrentDirection();
 
-        for (Point cell : nearbyCells(futureBounds)) {
-            List<Wall> cellWalls = grid.get(cell);
-            if (cellWalls != null) {
-                for (Wall wall : cellWalls) {
-                    if (futureBounds.intersects(wall.getBounds())) {
-                        return true;
+        for (int currentSpeed = originalSpeed; currentSpeed >= 1; currentSpeed--) {
+            Point futurePosition = movable.calculateFuturePosition(currentSpeed, direction);
+            Rectangle futureBounds = new Rectangle(futurePosition.x, futurePosition.y, (int) movable.getWidth(), (int) movable.getHeight());
+
+            boolean collisionDetected = false;
+
+            for (Point cell : nearbyCells(futureBounds)) {
+                List<Wall> cellWalls = grid.get(cell);
+                if (cellWalls != null) {
+                    for (Wall wall : cellWalls) {
+                        if (futureBounds.intersects(wall.getBounds())) {
+                            collisionDetected = true;
+                            break;
+                        }
                     }
                 }
+                if (collisionDetected) {
+                    break;
+                }
+            }
+
+            if (!collisionDetected) {
+                movable.setSpeed(currentSpeed);
+                return false;
             }
         }
 
-        return false;
+        return true;
     }
+
 
     private Iterable<Point> nearbyCells(Rectangle bounds) {
         return () -> new Iterator<>() {

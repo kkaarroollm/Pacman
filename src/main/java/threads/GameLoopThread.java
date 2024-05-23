@@ -42,9 +42,6 @@ public class GameLoopThread extends Thread {
 
     private void updateGame() {
         pacman.move();
-        for (Ghost ghost : ghosts) {
-            ghost.move();
-        }
         gamePanel.repaint();
     }
 }

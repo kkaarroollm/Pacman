@@ -12,11 +12,12 @@ public class Pacman extends MovableGrid {
     private final int RIGHT = Direction.RIGHT.ordinal();
     private final int DOWN = Direction.DOWN.ordinal();
     private final int LEFT = Direction.LEFT.ordinal();
+    private static final int DEFAULT_SPEED = 7;
 
     private final WallDetector wallDetector;
 
     public Pacman(WallDetector wallDetector) {
-        super(24, 24, 20, 20, 7);
+        super(24, 24, 18, 18, DEFAULT_SPEED);
         this.wallDetector = wallDetector;
         try {
             loadAndProcessImages();
@@ -38,6 +39,7 @@ public class Pacman extends MovableGrid {
             }
 
             bounds.setLocation(x, y);
+            this.speed = DEFAULT_SPEED;
             System.out.println("Pacman x: " + x + " y: " + y);
         }
     }

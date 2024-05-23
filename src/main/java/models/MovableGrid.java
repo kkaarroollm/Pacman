@@ -25,6 +25,10 @@ public abstract class MovableGrid extends Grid implements Movable {
         return speed;
     }
 
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
     protected Point calculateFuturePosition(double speed, Direction currentDirection) {
         double futureX = getX();
         double futureY = getY();
