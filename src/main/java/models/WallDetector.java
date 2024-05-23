@@ -10,16 +10,12 @@ public class WallDetector {
 
     public WallDetector(List<Wall> walls, int cellSize) {
         this.cellSize = cellSize;
-        // Setting locations of the walls
         this.grid = new HashMap<>();
 
         for (Wall wall : walls) {
             Point cell = getCell(wall.getBounds().getLocation());
             grid.computeIfAbsent(cell, k -> new ArrayList<>()).add(wall);
         }
-
-        System.out.println("WallDetector created");
-        System.out.println(grid);
     }
 
     private Point getCell(Point position) {
@@ -32,9 +28,7 @@ public class WallDetector {
         Point futurePosition = movable.calculateFuturePosition(movable.getSpeed(), movable.getCurrentDirection());
         Rectangle futureBounds = new Rectangle(futurePosition.x, futurePosition.y, (int) movable.getWidth(), (int) movable.getHeight());
 
-        Set<Point> nearbyCells = getNearbyCells(futureBounds);
-
-        for (Point cell : nearbyCells) {
+        for (Point cell : nearbyCells(futureBounds)) {
             List<Wall> cellWalls = grid.get(cell);
             if (cellWalls != null) {
                 for (Wall wall : cellWalls) {
@@ -48,18 +42,28 @@ public class WallDetector {
         return false;
     }
 
-    private Set<Point> getNearbyCells(Rectangle bounds) {
-        Set<Point> cells = new HashSet<>();
-        int minCellX = bounds.x / cellSize;
-        int maxCellX = (bounds.x + bounds.width) / cellSize;
-        int minCellY = bounds.y / cellSize;
-        int maxCellY = (bounds.y + bounds.height) / cellSize;
+    private Iterable<Point> nearbyCells(Rectangle bounds) {
+        return () -> new Iterator<>() {
+            int currentX = bounds.x / cellSize;
+            int currentY = bounds.y / cellSize;
+            final int maxX = (bounds.x + bounds.width) / cellSize;
+            final int maxY = (bounds.y + bounds.height) / cellSize;
 
-        for (int x = minCellX; x <= maxCellX; x++) {
-            for (int y = minCellY; y <= maxCellY; y++) {
-                cells.add(new Point(x, y));
+            @Override
+            public boolean hasNext() {
+                return currentX <= maxX && currentY <= maxY;
             }
-        }
-        return cells;
+
+            @Override
+            public Point next() {
+                Point nextCell = new Point(currentX, currentY);
+                currentX++;
+                if (currentX > maxX) {
+                    currentX = bounds.x / cellSize;
+                    currentY++;
+                }
+                return nextCell;
+            }
+        };
     }
 }
