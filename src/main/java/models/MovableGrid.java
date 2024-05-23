@@ -73,20 +73,8 @@ public abstract class MovableGrid extends Grid implements Movable {
         return currentDirection;
     }
 
-    public Direction getLastDirection() {
-        return lastDirection;
-    }
-
     public void setLastDirection(Direction lastDirection) {
         this.lastDirection = lastDirection;
-    }
-
-    public Image[][] getFrames() {
-        return frames;
-    }
-
-    public void setFrames(Image[][] frames) {
-        this.frames = frames;
     }
 
     @Override

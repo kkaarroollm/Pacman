@@ -12,14 +12,6 @@ public class ImageUtils {
         return ImageIO.read(new File(imagePath));
     }
 
-    public static BufferedImage resizeImage(BufferedImage img, int width, int height) {
-        BufferedImage resizedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2d = resizedImage.createGraphics();
-        g2d.drawImage(img, 0, 0, width, height, null);
-        g2d.dispose();
-        return resizedImage;
-    }
-
     public static BufferedImage rotateImage(BufferedImage img, double angle, boolean mirror) {
         int w = img.getWidth();
         int h = img.getHeight();

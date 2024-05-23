@@ -6,12 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="f4768cf6-5215-473b-8ccc-848325ad4bde" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Game.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controllers/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/GamePanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/models/Ghost.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/models/Ghost.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/models/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/models/Board.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/models/MovableGrid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/models/MovableGrid.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/models/Pacman.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/models/Pacman.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/models/Wall.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/models/Wall.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/models/WallDetector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/models/WallDetector.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/threads/GameLoopThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/threads/GameLoopThread.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/utils/ImageUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/ImageUtils.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,26 +47,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;editing.templates&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "/Users/karolmarszalek/pacmanghrandom/guiPacman/src/main/resources/images/map",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "editing.templates",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources/images/map" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/main/resources/images/" />
       <recent name="$PROJECT_DIR$/src/main/resources/images.ghost" />
@@ -115,7 +121,7 @@
       <updated>1716224574894</updated>
       <workItem from="1716224575891" duration="62190000" />
       <workItem from="1716380857464" duration="22920000" />
-      <workItem from="1716409762001" duration="14507000" />
+      <workItem from="1716409762001" duration="25481000" />
     </task>
     <servers />
   </component>

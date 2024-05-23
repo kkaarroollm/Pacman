@@ -8,7 +8,7 @@ import java.util.List;
 
 public class WallDetector {
     private final int cellSize;
-    private final Map<Point, List<Wall>> grid;
+    private final Map<Point, Wall> grid;
 
     public WallDetector(List<Wall> walls, int cellSize) {
         this.cellSize = cellSize;
@@ -16,7 +16,7 @@ public class WallDetector {
 
         for (Wall wall : walls) {
             Point cell = getCell(wall.getBounds().getLocation());
-            grid.computeIfAbsent(cell, k -> new ArrayList<>()).add(wall);
+            grid.putIfAbsent(cell, wall);
         }
     }
 
@@ -37,16 +37,9 @@ public class WallDetector {
             boolean collisionDetected = false;
 
             for (Point cell : nearbyCells(futureBounds)) {
-                List<Wall> cellWalls = grid.get(cell);
-                if (cellWalls != null) {
-                    for (Wall wall : cellWalls) {
-                        if (futureBounds.intersects(wall.getBounds())) {
-                            collisionDetected = true;
-                            break;
-                        }
-                    }
-                }
-                if (collisionDetected) {
+                Wall cellWall = grid.get(cell);
+                if (cellWall != null && futureBounds.intersects(cellWall.getBounds())) {
+                    collisionDetected = true;
                     break;
                 }
             }
@@ -59,7 +52,6 @@ public class WallDetector {
 
         return true;
     }
-
 
     private Iterable<Point> nearbyCells(Rectangle bounds) {
         return () -> new Iterator<>() {

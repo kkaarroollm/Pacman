@@ -12,12 +12,12 @@ public class Pacman extends MovableGrid {
     private final int RIGHT = Direction.RIGHT.ordinal();
     private final int DOWN = Direction.DOWN.ordinal();
     private final int LEFT = Direction.LEFT.ordinal();
-    private static final int DEFAULT_SPEED = 7;
+    private static final int DEFAULT_SPEED = 8;
 
     private final WallDetector wallDetector;
 
     public Pacman(WallDetector wallDetector) {
-        super(24, 24, 18, 18, DEFAULT_SPEED);
+        super(24, 24, 22, 22, DEFAULT_SPEED);
         this.wallDetector = wallDetector;
         try {
             loadAndProcessImages();
@@ -44,32 +44,26 @@ public class Pacman extends MovableGrid {
         }
     }
 
-
     private void loadAndProcessImages() throws IOException {
         BufferedImage pacImg1 = ImageUtils.loadImage("src/main/resources/images/pacman/pacman1R.png");
         BufferedImage pacImg2 = ImageUtils.loadImage("src/main/resources/images/pacman/pacman2R.png");
         BufferedImage pacImg3 = ImageUtils.loadImage("src/main/resources/images/pacman/pacman3R.png");
 
         frames = new BufferedImage[4][3];
-        frames[UP][0] = resizeAndRotateImage(pacImg1, -Math.PI / 2, false);
-        frames[UP][1] = resizeAndRotateImage(pacImg2, -Math.PI / 2, false);
-        frames[UP][2] = resizeAndRotateImage(pacImg3, -Math.PI / 2, false);
+        frames[UP][0] = ImageUtils.rotateImage(pacImg1, -Math.PI / 2, false);
+        frames[UP][1] = ImageUtils.rotateImage(pacImg2, -Math.PI / 2, false);
+        frames[UP][2] = ImageUtils.rotateImage(pacImg3, -Math.PI / 2, false);
 
-        frames[RIGHT][0] = resizeAndRotateImage(pacImg1, 0, false);
-        frames[RIGHT][1] = resizeAndRotateImage(pacImg2, 0, false);
-        frames[RIGHT][2] = resizeAndRotateImage(pacImg3, 0, false);
+        frames[RIGHT][0] = ImageUtils.rotateImage(pacImg1, 0, false);
+        frames[RIGHT][1] = ImageUtils.rotateImage(pacImg2, 0, false);
+        frames[RIGHT][2] = ImageUtils.rotateImage(pacImg3, 0, false);
 
-        frames[DOWN][0] = resizeAndRotateImage(pacImg1, Math.PI / 2, false);
-        frames[DOWN][1] = resizeAndRotateImage(pacImg2, Math.PI / 2, false);
-        frames[DOWN][2] = resizeAndRotateImage(pacImg3, Math.PI / 2, false);
+        frames[DOWN][0] = ImageUtils.rotateImage(pacImg1, Math.PI / 2, false);
+        frames[DOWN][1] = ImageUtils.rotateImage(pacImg2, Math.PI / 2, false);
+        frames[DOWN][2] = ImageUtils.rotateImage(pacImg3, Math.PI / 2, false);
 
-        frames[LEFT][0] = resizeAndRotateImage(pacImg1, Math.PI, true);
-        frames[LEFT][1] = resizeAndRotateImage(pacImg2, Math.PI, true);
-        frames[LEFT][2] = resizeAndRotateImage(pacImg3, Math.PI, true);
-    }
-
-    private BufferedImage resizeAndRotateImage(BufferedImage baseImage, double angle, boolean mirror) {
-        BufferedImage rotatedImage = ImageUtils.rotateImage(baseImage, angle, mirror);
-        return ImageUtils.resizeImage(rotatedImage, width, height);
+        frames[LEFT][0] = ImageUtils.rotateImage(pacImg1, Math.PI, true);
+        frames[LEFT][1] = ImageUtils.rotateImage(pacImg2, Math.PI, true);
+        frames[LEFT][2] = ImageUtils.rotateImage(pacImg3, Math.PI, true);
     }
 }

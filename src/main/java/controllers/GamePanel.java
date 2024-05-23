@@ -39,17 +39,13 @@ public class GamePanel extends JPanel {
             public void keyPressed(KeyEvent e) {
                 keyInputPressed(e);
             }
-            @Override
-            public void keyReleased(KeyEvent e) {
-                keyInputReleased(e);
-            }
         });
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.setColor(Color.WHITE);
+        g.setColor(Color.BLACK);
         g.fillRect(0, 0, getWidth(), getHeight());
         drawBoard(g);
         drawPacman(g);
@@ -58,12 +54,12 @@ public class GamePanel extends JPanel {
     }
 
     private void drawPacman(Graphics g) {
-        g.drawImage(pacman.getCurrentImage(), (int)pacman.getX(), (int)pacman.getY(), this);
+        pacman.draw(g);
     }
 
     private void drawGhosts(Graphics g) {
         for (Ghost ghost : ghosts) {
-            g.drawImage(ghost.getCurrentImage(), (int)ghost.getX(), (int)ghost.getY(), this);
+            ghost.draw(g);
         }
     }
 
@@ -116,19 +112,6 @@ public class GamePanel extends JPanel {
 
         pacman.move();
         repaint();
-    }
-
-    private void keyInputReleased(KeyEvent e) {
-        int key = e.getKeyCode();
-
-        switch (key) {
-            case KeyEvent.VK_UP:
-            case KeyEvent.VK_DOWN:
-            case KeyEvent.VK_LEFT:
-            case KeyEvent.VK_RIGHT:
-                pacman.setCurrentDirection(Direction.NONE);
-                break;
-        }
     }
 
 //    private void checkCollisions() {

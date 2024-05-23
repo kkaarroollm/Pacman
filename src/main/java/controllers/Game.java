@@ -25,7 +25,7 @@ public class Game extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(true);
 
-        Board board = new Board(BLOCK_SIZE);
+        Board board = new Board();
         WallDetector wallDetector = new WallDetector(board.getWalls(), BLOCK_SIZE);
         List<Ghost> ghosts = Arrays.asList(new Ghost(wallDetector), new Ghost(wallDetector), new Ghost(wallDetector));
         Pacman pacman = new Pacman(wallDetector);
