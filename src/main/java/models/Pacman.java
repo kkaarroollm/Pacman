@@ -3,6 +3,7 @@ package models;
 import constants.Direction;
 import utils.ImageUtils;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -15,7 +16,7 @@ public class Pacman extends MovableGrid {
     private final WallDetector wallDetector;
 
     public Pacman(WallDetector wallDetector) {
-        super(24, 24, 20, 20, 5);
+        super(24, 24, 20, 20, 7);
         this.wallDetector = wallDetector;
         try {
             loadAndProcessImages();
@@ -28,22 +29,10 @@ public class Pacman extends MovableGrid {
     @Override
     public void move() {
         if (!wallDetector.willCollide(this)) {
-            switch (currentDirection) {
-                case UP:
-                    y -= speed;
-                    break;
-                case DOWN:
-                    y += speed;
-                    break;
-                case LEFT:
-                    x -= speed;
-                    break;
-                case RIGHT:
-                    x += speed;
-                    break;
-                case NONE:
-                    break;
-            }
+            Point futurePosition = calculateFuturePosition(speed, currentDirection);
+            x = futurePosition.x;
+            y = futurePosition.y;
+
             if (currentDirection != Direction.NONE) {
                 setLastDirection(currentDirection);
             }
@@ -52,6 +41,7 @@ public class Pacman extends MovableGrid {
             System.out.println("Pacman x: " + x + " y: " + y);
         }
     }
+
 
     private void loadAndProcessImages() throws IOException {
         BufferedImage pacImg1 = ImageUtils.loadImage("src/main/resources/images/pacman/pacman1R.png");

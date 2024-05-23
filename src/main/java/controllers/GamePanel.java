@@ -63,7 +63,7 @@ public class GamePanel extends JPanel {
 
     private void drawGhosts(Graphics g) {
         for (Ghost ghost : ghosts) {
-            g.drawImage(ghost.getCurrentImage(), ghost.getX(), ghost.getY(), this);
+            g.drawImage(ghost.getCurrentImage(), (int)ghost.getX(), (int)ghost.getY(), this);
         }
     }
 

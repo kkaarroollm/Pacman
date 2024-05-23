@@ -9,7 +9,7 @@ public class Board {
     private final int BLOCK_SIZE;
 
     public Board(int blockSize) {
-        this.BLOCK_SIZE = blockSize;
+        this.BLOCK_SIZE = blockSize; // 24 // Size screen:
         walls = new ArrayList<>();
         initializeBoard();
     }

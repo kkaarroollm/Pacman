@@ -25,6 +25,28 @@ public abstract class MovableGrid extends Grid implements Movable {
         return speed;
     }
 
+    protected Point calculateFuturePosition(double speed, Direction currentDirection) {
+        double futureX = getX();
+        double futureY = getY();
+
+        switch (currentDirection) {
+            case UP:
+                futureY -= speed;
+                break;
+            case DOWN:
+                futureY += speed;
+                break;
+            case LEFT:
+                futureX -= speed;
+                break;
+            case RIGHT:
+                futureX += speed;
+                break;
+        }
+
+        return new Point((int) futureX, (int) futureY);
+    }
+
     public void updateAnimationFrame() {
         currentFrame = (currentFrame + 1) % frames[lastDirection.ordinal()].length;
     }

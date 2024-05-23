@@ -1,44 +1,65 @@
 package models;
 
+import constants.Direction;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.Random;
 
-public class Ghost implements Movable{
-    private int x=50, y=50;
-    private int dx, dy;
-    private int currentFrame;
-    private Image[] frames;
+public class Ghost extends MovableGrid {
+    private final WallDetector wallDetector;
+    private final Random random;
+    Image[] frames;
 
-    public Ghost() {
-        frames = new Image[2];
+    public Ghost(WallDetector wallDetector) {
+        super(24, 24, 22, 22, 7);
+        this.wallDetector = wallDetector;
+        this.random = new Random();
+        this.frames = new Image[2];
         frames[0] = new ImageIcon("src/main/resources/images/ghost/ghost1.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT);
         frames[1] = new ImageIcon("src/main/resources/images/ghost/ghost2.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT);
-        currentFrame = 0;
+
     }
 
+    @Override
     public void move() {
-        this.x += dx;
-        this.y += dy;
+        if (!wallDetector.willCollide(this)) {
+            switch (getRandomDirection()) {
+                case UP:
+                    y -= speed;
+                    break;
+                case DOWN:
+                    y += speed;
+                    break;
+                case LEFT:
+                    x -= speed;
+                    break;
+                case RIGHT:
+                    x += speed;
+                    break;
+                case NONE:
+                    break;
+            }
+
+            bounds.setLocation(x, y);
+            System.out.println("Ghost x: " + x + " y: " + y);
+        }
     }
 
+    private Direction getRandomDirection() {
+        Direction[] directions = Direction.values();
+        return directions[random.nextInt(directions.length)];
+    }
+
+    @Override
     public void updateAnimationFrame() {
         currentFrame = (currentFrame + 1) % frames.length;
     }
 
+    @Override
     public Image getCurrentImage() {
         return frames[currentFrame];
     }
 
-    public void setDirection(int dx, int dy) {
-        this.dx = dx;
-        this.dy = dy;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
 }
+    
