@@ -50,7 +50,7 @@ public class GamePanel extends JPanel {
         drawBoard(g);
         drawPacman(g);
         drawGhosts(g);
-//        drawHUD(g);
+        drawHUD(g);
     }
 
     private void drawPacman(Graphics g) {
@@ -63,14 +63,13 @@ public class GamePanel extends JPanel {
         }
     }
 
-
     private void drawHUD(Graphics g) {
         g.setColor(Color.WHITE);
         g.setFont(new Font("Arial", Font.BOLD, 14));
 
         g.drawString("Score: " + score, 10, 20);
         g.drawString("Lives: " + lives, 10, 40);
-        g.drawString("Time: " + gameTime / 1000 + "s", 10, 60);
+        g.drawString("Time: " + this.gameTime + "s", 10, 60);
     }
 
     private void drawBoard(Graphics g){
@@ -89,7 +88,6 @@ public class GamePanel extends JPanel {
 
     public void updateTime(long newGameTime) {
         this.gameTime = newGameTime;
-        repaint();
     }
 
     private void keyInputPressed(KeyEvent e) {

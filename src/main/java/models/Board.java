@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Board {
     private final BoardElements boardObjects;
-    private final CollisionDetector collisionDetector;
+    public final CollisionDetector collisionDetector;
     String filename;
 
     public Board() {
@@ -45,12 +45,15 @@ public class Board {
         return !collisionDetector.willCollideWithWall(movable);
     }
 
-    public void eatEatables(Pacman pacman) {
-        EatableGrid eatable = collisionDetector.checkAndEatEatables(pacman);
+    public void eatEatables() {
+        EatableGrid eatable = collisionDetector.checkAndEatEatables();
         if (eatable instanceof Coin) {
             boardObjects.coins().remove(eatable);
         }
-        System.out.println("Coins left: " + getCoins().size());
+    }
+
+    public boolean canChasePacman(Ghost ghost) {
+        return collisionDetector.canChasePacman(ghost);
     }
 
 }

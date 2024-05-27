@@ -9,14 +9,12 @@ import java.util.List;
 public class GameLoopThread extends Thread {
     private final GamePanel gamePanel;
     private final Pacman pacman;
-    private final List<Ghost> ghosts;
     private final Object lock;
     private boolean running;
 
-    public GameLoopThread(GamePanel gamePanel, Pacman pacman, List<Ghost> ghosts, Object lock) {
+    public GameLoopThread(GamePanel gamePanel, Pacman pacman, Object lock) {
         this.gamePanel = gamePanel;
         this.pacman = pacman;
-        this.ghosts = ghosts;
         this.lock = lock;
         this.running = true;
         setName("GameLoopThread");

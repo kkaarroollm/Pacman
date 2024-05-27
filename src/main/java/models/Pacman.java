@@ -16,8 +16,9 @@ public class Pacman extends MovableGrid implements Renderable {
     private final Board board;
 
     public Pacman(Board board) {
-        super(24, 24, 24, 24, DEFAULT_SPEED);
+        super(24, 672, 24, 24, DEFAULT_SPEED);
         this.board = board;
+        this.board.collisionDetector.setPacman(this);
         try {
             loadAndProcessImages();
         } catch (IOException e) {
@@ -29,7 +30,8 @@ public class Pacman extends MovableGrid implements Renderable {
     @Override
     public void move() {
         if (board.hasNoWallCollisions(this)) {
-            board.eatEatables(this);
+            board.eatEatables();
+
             Unit futurePosition = calculateFuturePosition(speed, currentDirection);
             x = futurePosition.getX();
             y = futurePosition.getY();

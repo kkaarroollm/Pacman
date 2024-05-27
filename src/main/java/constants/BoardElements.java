@@ -1,6 +1,7 @@
 package constants;
 
 import models.Coin;
+import models.Ghost;
 import models.Wall;
 
 import java.util.List;

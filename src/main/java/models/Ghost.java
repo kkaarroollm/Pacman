@@ -28,6 +28,10 @@ public class Ghost extends MovableGrid implements Renderable {
 
     @Override
     public void move() {
+        if (board.canChasePacman(this)) {
+            System.out.println("Chasing pacman");
+            chasePacman();
+        }
         maxDistance = Game.BLOCK_SIZE * (2 * random.nextInt(2, 4));
         if (distanceMoved >= maxDistance || !board.hasNoWallCollisions(this)) {
             this.setCurrentDirection(getRandomDirection());
@@ -52,6 +56,11 @@ public class Ghost extends MovableGrid implements Renderable {
         } while (newDirection == Direction.NONE || newDirection == Direction.getOpposite(currentDirection));
 
         return newDirection;
+    }
+
+
+    public void chasePacman() {
+        // implement chasing pacman
     }
 
     @Override

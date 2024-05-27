@@ -2,6 +2,7 @@ package controllers;
 
 import models.*;
 import threads.*;
+import utils.BoardReaderUtils;
 
 import javax.swing.*;
 import java.util.Arrays;
@@ -37,7 +38,7 @@ public class Game extends JFrame {
         ghostMovementThread = new GhostMovementThread(ghosts, lock);
         ghostMovementThread.start();
 
-        gameLoopThread = new GameLoopThread(gamePanel, pacman, ghosts, lock);
+        gameLoopThread = new GameLoopThread(gamePanel, pacman, lock);
         gameLoopThread.start();
 
         gameTimerThread = new GameTimerThread(gamePanel);
