@@ -1,5 +1,6 @@
 package models;
 
+import constants.BoardElements;
 import controllers.Game;
 import utils.BoardReaderUtils;
 

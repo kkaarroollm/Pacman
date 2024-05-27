@@ -1,6 +1,6 @@
 package utils;
 
-import models.BoardElements;
+import constants.BoardElements;
 import models.Coin;
 import models.Wall;
 

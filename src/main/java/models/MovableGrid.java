@@ -21,7 +21,7 @@ public abstract class MovableGrid extends Grid implements Movable {
 
     public abstract void move();
 
-    protected Point calculateFuturePosition(double speed, Direction currentDirection) {
+    protected Unit calculateFuturePosition(double speed, Direction currentDirection) {
         double futureX = this.x;
         double futureY = this.y;
 
@@ -40,7 +40,7 @@ public abstract class MovableGrid extends Grid implements Movable {
                 break;
         }
 
-        return new Point((int) futureX, (int) futureY);
+        return new Unit((int) futureX, (int) futureY);
     }
 
     public void updateAnimationFrame() {
@@ -72,7 +72,6 @@ public abstract class MovableGrid extends Grid implements Movable {
         this.lastDirection = lastDirection;
     }
 
-    @Override
     public void draw(Graphics g) {
         g.drawImage(getCurrentImage(), x, y, width, height, null);
     }

@@ -2,13 +2,12 @@ package models;
 
 import constants.Direction;
 
-import java.awt.*;
 import java.util.*;
 
 public class CollisionDetector {
     private final int cellSize;
-    Map<Point, Wall> wallsMap;
-    Map<Point, EatableGrid> eatables;
+    Map<Unit, Wall> wallsMap;
+    Map<Unit, EatableGrid> eatables;
 
     public CollisionDetector(Board board, int cellSize) {
         this.cellSize = cellSize;
@@ -16,20 +15,20 @@ public class CollisionDetector {
         this.eatables = new HashMap<>();
 
         for (Wall wall : board.getWalls()) {
-            Point cell = getCell(wall.getLocation());
+            Unit cell = getCell(wall);
             wallsMap.put(cell, wall);
         }
 
         for (Coin coin : board.getCoins()) {
-            Point cell = getCell(coin.getLocation());
+            Unit cell = getCell(coin);
             eatables.put(cell, coin);
         }
     }
 
-    private Point getCell(Point position) {
+    private Unit getCell(Grid position) {
         int cellX = position.x / cellSize;
         int cellY = position.y / cellSize;
-        return new Point(cellX, cellY);
+        return new Unit(cellX, cellY);
     }
 
     public boolean willCollideWithWall(MovableGrid movable) {
@@ -37,14 +36,15 @@ public class CollisionDetector {
         Direction direction = movable.getCurrentDirection();
 
         for (int currentSpeed = originalSpeed; currentSpeed >= 1; currentSpeed--) {
-            Point futurePosition = movable.calculateFuturePosition(currentSpeed, direction);
-            Rectangle futureBounds = new Rectangle(futurePosition.x, futurePosition.y, (int) movable.getWidth(), (int) movable.getHeight());
+            Unit futurePosition = movable.calculateFuturePosition(currentSpeed, direction);
+            Grid futureBounds = new Grid(futurePosition.getX(), futurePosition.getY(), movable.width, movable.height);
 
             boolean collisionDetected = false;
 
-            for (Point cell : getNearbyPoints(futureBounds)) {
+            for (Unit cell : getNearbyPoints(futureBounds)) {
                 Wall cellWall = wallsMap.get(cell);
-                if (cellWall != null && futureBounds.intersects(cellWall.getBounds())) {
+                System.out.println(cellWall);
+                if (cellWall != null && futureBounds.hit(cellWall)) {
                     collisionDetected = true;
                     break;
                 }
@@ -60,12 +60,11 @@ public class CollisionDetector {
     }
 
     public EatableGrid checkAndEatEatables(Pacman pacman) {
-        Point currentPosition = pacman.getLocation();
-        Rectangle pacmanBounds = new Rectangle(currentPosition.x, currentPosition.y, (int) pacman.getWidth(), (int) pacman.getHeight());
+        Grid pacmanBounds = new Grid(pacman.x, pacman.y, pacman.width, pacman.height);
 
-        for (Point cell : getNearbyPoints(pacmanBounds)) {
+        for (Unit cell : getNearbyPoints(pacmanBounds)) {
             EatableGrid eatable = eatables.get(cell);
-            if (eatable != null && pacmanBounds.contains(eatable.getBounds())) {
+            if (eatable != null && pacmanBounds.overlay(eatable)) {
                 eatables.remove(cell);
                 return eatable;
             }
@@ -73,7 +72,7 @@ public class CollisionDetector {
         return null;
     }
 
-    private Iterable<Point> getNearbyPoints(Rectangle bounds) {
+    private Iterable<Unit> getNearbyPoints(Grid bounds) {
         return () -> new Iterator<>() {
             int currentX = bounds.x / cellSize; // Top left
             int currentY = bounds.y / cellSize; // Top left
@@ -86,14 +85,14 @@ public class CollisionDetector {
             }
 
             @Override
-            public Point next() {
-                Point nextPoint = new Point(currentX, currentY);
+            public Unit next() {
+                Unit nextUnit = new Unit(currentX, currentY);
                 currentX++;
                 if (currentX > maxX) {
                     currentX = bounds.x / cellSize;
                     currentY++;
                 }
-                return nextPoint;
+                return nextUnit;
             }
         };
     }

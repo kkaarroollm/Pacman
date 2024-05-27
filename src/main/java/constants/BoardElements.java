@@ -1,4 +1,7 @@
-package models;
+package constants;
+
+import models.Coin;
+import models.Wall;
 
 import java.util.List;
 

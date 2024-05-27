@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Random;
 
-public class Ghost extends MovableGrid {
+public class Ghost extends MovableGrid implements Renderable {
     private final Board board;
     private final Random random;
     private int distanceMoved;
@@ -34,11 +34,10 @@ public class Ghost extends MovableGrid {
             distanceMoved = 0;
         }
 
-        Point nextPosition = calculateFuturePosition(speed, currentDirection);
+        Unit nextPosition = calculateFuturePosition(speed, currentDirection);
         if (board.hasNoWallCollisions(this)) {
-            x = nextPosition.x;
-            y = nextPosition.y;
-            this.setLocation(x, y);
+            x = nextPosition.getX();
+            y = nextPosition.getY();
             distanceMoved += speed;
             this.setSpeed(DEFAULT_SPEED);
         }

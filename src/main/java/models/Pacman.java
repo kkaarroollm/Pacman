@@ -3,11 +3,10 @@ package models;
 import constants.Direction;
 import utils.ImageUtils;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-public class Pacman extends MovableGrid {
+public class Pacman extends MovableGrid implements Renderable {
     private final int UP = Direction.UP.ordinal();
     private final int RIGHT = Direction.RIGHT.ordinal();
     private final int DOWN = Direction.DOWN.ordinal();
@@ -31,17 +30,15 @@ public class Pacman extends MovableGrid {
     public void move() {
         if (board.hasNoWallCollisions(this)) {
             board.eatEatables(this);
-            Point futurePosition = calculateFuturePosition(speed, currentDirection);
-            x = futurePosition.x;
-            y = futurePosition.y;
+            Unit futurePosition = calculateFuturePosition(speed, currentDirection);
+            x = futurePosition.getX();
+            y = futurePosition.getY();
 
             if (currentDirection != Direction.NONE) {
                 setLastDirection(currentDirection);
             }
 
-            this.setLocation(x, y);
             this.speed = DEFAULT_SPEED;
-            System.out.println("Pacman x: " + x + " y: " + y);
         }
     }
 
