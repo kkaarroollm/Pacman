@@ -40,8 +40,8 @@ public class Board {
         return boardObjects.coins();
     }
 
-    public boolean checkCollisionWithWalls(MovableGrid movable) {
-        return collisionDetector.willCollideWithWall(movable);
+    public boolean hasNoWallCollisions(MovableGrid movable) {
+        return !collisionDetector.willCollideWithWall(movable);
     }
 
     public void eatEatables(Pacman pacman) {

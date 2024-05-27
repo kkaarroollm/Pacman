@@ -5,5 +5,15 @@ public enum Direction {
     DOWN,
     LEFT,
     RIGHT,
-    NONE
+    NONE;
+
+    public static Direction getOpposite(Direction direction) {
+        return switch (direction) {
+            case UP -> DOWN;
+            case DOWN -> UP;
+            case LEFT -> RIGHT;
+            case RIGHT -> LEFT;
+            default -> NONE;
+        };
+    }
 }

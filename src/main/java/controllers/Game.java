@@ -11,10 +11,8 @@ public class Game extends JFrame {
     final Object lock = new Object();
     private final GameLoopThread gameLoopThread;
     private final AnimationThread animationThread;
+    private final GhostMovementThread ghostMovementThread;
     private final GameTimerThread gameTimerThread;
-    private final ScoreUpdateThread scoreUpdateThread;
-    private final LifeCounterThread lifeCounterThread;
-
     public static final int BLOCK_SIZE = 24;
 
     public Game() {
@@ -24,10 +22,9 @@ public class Game extends JFrame {
         setResizable(true);
 
         Board board = new Board();
-//        CollisionDetector collisionDetector = new CollisionDetector(board.getWalls(), board.getCoins(), BLOCK_SIZE);
 
         // Movable objects needs to contain a WallDetector object
-        List<Ghost> ghosts = Arrays.asList(new Ghost(board), new Ghost(board), new Ghost(board));
+        List<Ghost> ghosts = Arrays.asList(new Ghost(board, 240, 240), new Ghost(board, 120, 120), new Ghost(board, 120, 60));
         Pacman pacman = new Pacman(board);
 
         GamePanel gamePanel = new GamePanel(this, pacman, ghosts, board);
@@ -37,18 +34,14 @@ public class Game extends JFrame {
         animationThread = new AnimationThread(pacman, ghosts, board.getCoins(), lock);
         animationThread.start();
 
+        ghostMovementThread = new GhostMovementThread(ghosts, lock);
+        ghostMovementThread.start();
 
         gameLoopThread = new GameLoopThread(gamePanel, pacman, ghosts, lock);
         gameLoopThread.start();
 
         gameTimerThread = new GameTimerThread(gamePanel);
         gameTimerThread.start();
-
-        scoreUpdateThread = new ScoreUpdateThread(gamePanel, lock);
-        scoreUpdateThread.start();
-
-        lifeCounterThread = new LifeCounterThread(gamePanel, lock);
-        lifeCounterThread.start();
 
         setVisible(true);
         System.out.println("Game started");
@@ -62,10 +55,7 @@ public class Game extends JFrame {
     public void stopGame() {
         gameLoopThread.stopGame();
         animationThread.stopAnimation();
-
         gameTimerThread.stopTimer();
-        scoreUpdateThread.stopScoreUpdate();
-        lifeCounterThread.stopLifeCounter();
     }
 
     public static void main(String[] args) {

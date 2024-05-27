@@ -29,8 +29,7 @@ public class Pacman extends MovableGrid {
 
     @Override
     public void move() {
-        if (!board.checkCollisionWithWalls(this)) {
-
+        if (board.hasNoWallCollisions(this)) {
             board.eatEatables(this);
             Point futurePosition = calculateFuturePosition(speed, currentDirection);
             x = futurePosition.x;

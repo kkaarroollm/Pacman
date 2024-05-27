@@ -1,14 +1,18 @@
 package threads;
 
+import java.util.List;
+import java.util.Random;
+
+import constants.Direction;
 import models.Ghost;
 
 public class GhostMovementThread extends Thread {
-    private Ghost ghost;
+    private List<Ghost> ghosts;
     private final Object lock;
     private boolean running;
 
-    public GhostMovementThread(Ghost ghost, Object lock) {
-        this.ghost = ghost;
+    public GhostMovementThread(List<Ghost> ghosts, Object lock) {
+        this.ghosts = ghosts;
         this.lock = lock;
         this.running = true;
         setName("GhostAnimationThread");
@@ -21,12 +25,13 @@ public class GhostMovementThread extends Thread {
     @Override
     public void run() {
         while (running) {
-            synchronized (lock) {
-                ghost.updateAnimationFrame();
-                ghost.move();
+                synchronized (lock) {
+                    for (Ghost ghost : ghosts) {
+                        ghost.move();
+                    }
             }
             try {
-                Thread.sleep(275);
+                Thread.sleep(65);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

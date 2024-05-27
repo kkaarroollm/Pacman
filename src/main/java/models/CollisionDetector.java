@@ -33,7 +33,6 @@ public class CollisionDetector {
     }
 
     public boolean willCollideWithWall(MovableGrid movable) {
-        System.out.println("Checking collision with walls");
         int originalSpeed = movable.getSpeed();
         Direction direction = movable.getCurrentDirection();
 
@@ -76,10 +75,10 @@ public class CollisionDetector {
 
     private Iterable<Point> getNearbyPoints(Rectangle bounds) {
         return () -> new Iterator<>() {
-            int currentX = bounds.x / cellSize;
-            int currentY = bounds.y / cellSize;
-            final int maxX = (bounds.x + bounds.width) / cellSize;
-            final int maxY = (bounds.y + bounds.height) / cellSize;
+            int currentX = bounds.x / cellSize; // Top left
+            int currentY = bounds.y / cellSize; // Top left
+            final int maxX = (bounds.x + bounds.width) / cellSize; // Bottom right
+            final int maxY = (bounds.y + bounds.height) / cellSize; // Bottom right;
 
             @Override
             public boolean hasNext() {
@@ -98,4 +97,7 @@ public class CollisionDetector {
             }
         };
     }
+
+    // method which checks if the ghost is in the nearby 5 cells, if yes, then it returns the direction to the pacman,
+    // if not, then it returns a random direction, it trying to catch pacman, but idk how now
 }
