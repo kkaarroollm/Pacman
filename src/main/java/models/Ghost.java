@@ -28,39 +28,99 @@ public class Ghost extends MovableGrid implements Renderable {
 
     @Override
     public void move() {
-        if (board.canChasePacman(this)) {
-            System.out.println("Chasing pacman");
+        if (board.isPacmanInGhostZone(this)) {
+            System.out.println("Chasing Pacman");
             chasePacman();
+        } else {
+            moveRandomly();
         }
+    }
+
+    private void moveRandomly() {
         maxDistance = Game.BLOCK_SIZE * (2 * random.nextInt(2, 4));
         if (distanceMoved >= maxDistance || !board.hasNoWallCollisions(this)) {
             this.setCurrentDirection(getRandomDirection());
             distanceMoved = 0;
         }
+        moveInCurrentDirection();
+    }
 
+    private void moveInCurrentDirection() {
         Unit nextPosition = calculateFuturePosition(speed, currentDirection);
         if (board.hasNoWallCollisions(this)) {
-            x = nextPosition.getX();
-            y = nextPosition.getY();
-            distanceMoved += speed;
-            this.setSpeed(DEFAULT_SPEED);
+            updatePosition(nextPosition);
         }
+    }
+
+    private void updatePosition(Unit futurePosition) {
+        x = futurePosition.getX();
+        y = futurePosition.getY();
+        distanceMoved += speed;
+        this.setSpeed(DEFAULT_SPEED);
     }
 
     private Direction getRandomDirection() {
         Direction[] directions = Direction.values();
         Direction newDirection;
-
         do {
             newDirection = directions[random.nextInt(directions.length)];
         } while (newDirection == Direction.NONE || newDirection == Direction.getOpposite(currentDirection));
-
         return newDirection;
     }
 
-
     public void chasePacman() {
-        // implement chasing pacman
+        Direction[] directions = getChaseDirections(
+                board.collisionDetector.getPacman().x,
+                board.collisionDetector.getPacman().y,
+                x, y
+        );
+
+        for (Direction direction : directions) {
+            if (tryMoveInDirection(direction)) {
+                return;
+            }
+        }
+
+        moveInAnyValidDirection();
+    }
+
+    private Direction[] getChaseDirections(int pacmanX, int pacmanY, int ghostX, int ghostY) {
+        int deltaX = pacmanX - ghostX;
+        int deltaY = pacmanY - ghostY;
+
+        Direction primaryDirection = (Math.abs(deltaX) > Math.abs(deltaY)) ?
+                (deltaX > 0 ? Direction.RIGHT : Direction.LEFT) :
+                (deltaY > 0 ? Direction.DOWN : Direction.UP);
+
+        Direction secondaryDirection = (primaryDirection == Direction.RIGHT || primaryDirection == Direction.LEFT) ?
+                (deltaY > 0 ? Direction.DOWN : Direction.UP) :
+                (deltaX > 0 ? Direction.RIGHT : Direction.LEFT);
+
+        return new Direction[]{primaryDirection, secondaryDirection};
+    }
+
+    private void moveInAnyValidDirection() {
+        for (Direction direction : Direction.values()) {
+            if (direction != Direction.NONE && direction != Direction.getOpposite(currentDirection)) {
+                if (tryMoveInDirection(direction)) {
+                    break;
+                }
+            }
+        }
+    }
+
+    private boolean tryMoveInDirection(Direction direction) {
+        Unit futurePosition = calculateFuturePosition(speed, direction);
+        if (board.hasNoWallCollisionsAtPos(this, direction, futurePosition.getX(), futurePosition.getY())) {
+            moveInDirection(direction, futurePosition);
+            return true;
+        }
+        return false;
+    }
+
+    private void moveInDirection(Direction direction, Unit futurePosition) {
+        updatePosition(futurePosition);
+        this.setCurrentDirection(direction);
     }
 
     @Override

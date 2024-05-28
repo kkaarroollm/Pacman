@@ -1,6 +1,7 @@
 package models;
 
 import constants.BoardElements;
+import constants.Direction;
 import controllers.Game;
 import utils.BoardReaderUtils;
 
@@ -45,6 +46,10 @@ public class Board {
         return !collisionDetector.willCollideWithWall(movable);
     }
 
+    public boolean hasNoWallCollisionsAtPos(MovableGrid movable, Direction direction, int x, int y) {
+        return !collisionDetector.willCollideWithWallAtPosition(movable, direction, x, y);
+    }
+
     public void eatEatables() {
         EatableGrid eatable = collisionDetector.checkAndEatEatables();
         if (eatable instanceof Coin) {
@@ -52,8 +57,8 @@ public class Board {
         }
     }
 
-    public boolean canChasePacman(Ghost ghost) {
-        return collisionDetector.canChasePacman(ghost);
+    public boolean isPacmanInGhostZone(Ghost ghost) {
+        return collisionDetector.isPacmanInGhostZone(ghost);
     }
 
 }

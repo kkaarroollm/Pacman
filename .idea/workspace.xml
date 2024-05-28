@@ -7,13 +7,9 @@
     <list default="true" id="f4768cf6-5215-473b-8ccc-848325ad4bde" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/constants/BoardElements.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/constants/BoardElements.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/GamePanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/models/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/models/Board.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/models/CollisionDetector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/models/CollisionDetector.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/models/Ghost.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/models/Ghost.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/models/Pacman.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/models/Pacman.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/threads/GameLoopThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/threads/GameLoopThread.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,8 +21,8 @@
       <list>
         <option value="package-info" />
         <option value="Enum" />
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -35,6 +31,9 @@
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
@@ -124,7 +123,7 @@
       <workItem from="1716224575891" duration="62190000" />
       <workItem from="1716380857464" duration="22920000" />
       <workItem from="1716409762001" duration="62559000" />
-      <workItem from="1716794139102" duration="28022000" />
+      <workItem from="1716794139102" duration="61083000" />
     </task>
     <servers />
   </component>
