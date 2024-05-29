@@ -16,7 +16,7 @@ public class Ghost extends MovableGrid implements Renderable {
     final Image[] frames;
 
     public Ghost(Board board, int x, int y) {
-        super(x, y, 24, 24, 5);
+        super(x, y, 20, 20, 5);
         this.board = board;
         this.random = new Random();
         this.frames = new Image[2];
@@ -69,11 +69,10 @@ public class Ghost extends MovableGrid implements Renderable {
     }
 
     public void chasePacman() {
-        Direction[] directions = getChaseDirections(
-                board.collisionDetector.getPacman().x,
-                board.collisionDetector.getPacman().y,
-                x, y
-        );
+        int pacmanX = board.collisionDetector.getPacman().x;
+        int pacmanY = board.collisionDetector.getPacman().y;
+
+        Direction[] directions = getChaseDirections(pacmanX, pacmanY, x, y);
 
         for (Direction direction : directions) {
             if (tryMoveInDirection(direction)) {
@@ -81,46 +80,54 @@ public class Ghost extends MovableGrid implements Renderable {
             }
         }
 
-        moveInAnyValidDirection();
     }
 
     private Direction[] getChaseDirections(int pacmanX, int pacmanY, int ghostX, int ghostY) {
         int deltaX = pacmanX - ghostX;
         int deltaY = pacmanY - ghostY;
 
-        Direction primaryDirection = (Math.abs(deltaX) > Math.abs(deltaY)) ?
-                (deltaX > 0 ? Direction.RIGHT : Direction.LEFT) :
-                (deltaY > 0 ? Direction.DOWN : Direction.UP);
+        Direction primaryDirection;
+        if (Math.abs(deltaX) > Math.abs(deltaY)) {
+            if (deltaX > 0) {
+                primaryDirection = Direction.RIGHT;
+            } else {
+                primaryDirection = Direction.LEFT;
+            }
+        } else {
+            if (deltaY > 0) {
+                primaryDirection = Direction.DOWN;
+            } else {
+                primaryDirection = Direction.UP;
+            }
+        }
 
-        Direction secondaryDirection = (primaryDirection == Direction.RIGHT || primaryDirection == Direction.LEFT) ?
-                (deltaY > 0 ? Direction.DOWN : Direction.UP) :
-                (deltaX > 0 ? Direction.RIGHT : Direction.LEFT);
+        Direction secondaryDirection;
+        if (primaryDirection == Direction.RIGHT || primaryDirection == Direction.LEFT) {
+            if (deltaY > 0) {
+                secondaryDirection = Direction.DOWN;
+            } else {
+                secondaryDirection = Direction.UP;
+            }
+        } else {
+            if (deltaX > 0) {
+                secondaryDirection = Direction.RIGHT;
+            } else {
+                secondaryDirection = Direction.LEFT;
+            }
+        }
 
         return new Direction[]{primaryDirection, secondaryDirection};
     }
 
-    private void moveInAnyValidDirection() {
-        for (Direction direction : Direction.values()) {
-            if (direction != Direction.NONE && direction != Direction.getOpposite(currentDirection)) {
-                if (tryMoveInDirection(direction)) {
-                    break;
-                }
-            }
-        }
-    }
 
     private boolean tryMoveInDirection(Direction direction) {
-        Unit futurePosition = calculateFuturePosition(speed, direction);
-        if (board.hasNoWallCollisionsAtPos(this, direction, futurePosition.getX(), futurePosition.getY())) {
-            moveInDirection(direction, futurePosition);
+        setCurrentDirection(direction);
+
+        if (board.hasNoWallCollisions(this)) {
+            moveInCurrentDirection();
             return true;
         }
         return false;
-    }
-
-    private void moveInDirection(Direction direction, Unit futurePosition) {
-        updatePosition(futurePosition);
-        this.setCurrentDirection(direction);
     }
 
     @Override

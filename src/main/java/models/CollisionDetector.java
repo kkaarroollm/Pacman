@@ -46,25 +46,6 @@ public class CollisionDetector {
         return this.pacman;
     }
 
-    public boolean willCollideWithWallAtPosition(MovableGrid movable, Direction direction, int x, int y) {
-        int originalX = movable.x;
-        int originalY = movable.y;
-
-        movable.x = x;
-        movable.y = y;
-
-        Direction tempDirection = movable.getCurrentDirection();
-        movable.setCurrentDirection(direction);
-
-        boolean collision = willCollideWithWall(movable);
-
-        movable.x = originalX;
-        movable.y = originalY;
-        movable.setCurrentDirection(tempDirection);
-
-        return collision;
-    }
-
     public boolean willCollideWithWall(MovableGrid movable) {
         int originalSpeed = movable.getSpeed();
         Direction direction = movable.getCurrentDirection();
@@ -123,7 +104,8 @@ public class CollisionDetector {
     }
 
     public boolean isPacmanInGhostZone(Ghost ghost) {
-        int chaseRangeCell = 10;
+        // TODO Implement here that the ghost should see the pacman in range but also in the direction of the pacman so pacman will be able to eat the ghost
+        int chaseRangeCell = 5;
         Unit ghostCell = getCell(ghost);
         Unit pacmanCell = getCell(this.pacman);
 

@@ -1,7 +1,6 @@
 package models;
 
 import constants.BoardElements;
-import constants.Direction;
 import controllers.Game;
 import utils.BoardReaderUtils;
 
@@ -44,10 +43,6 @@ public class Board {
 
     public boolean hasNoWallCollisions(MovableGrid movable) {
         return !collisionDetector.willCollideWithWall(movable);
-    }
-
-    public boolean hasNoWallCollisionsAtPos(MovableGrid movable, Direction direction, int x, int y) {
-        return !collisionDetector.willCollideWithWallAtPosition(movable, direction, x, y);
     }
 
     public void eatEatables() {
