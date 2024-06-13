@@ -95,16 +95,16 @@ public class GamePanel extends JPanel {
 
         switch (key) {
             case KeyEvent.VK_UP:
-                pacman.setCurrentDirection(Direction.UP);
+                pacman.setRequestedDirection(Direction.UP);
                 break;
             case KeyEvent.VK_DOWN:
-                pacman.setCurrentDirection(Direction.DOWN);
+                pacman.setRequestedDirection(Direction.DOWN);
                 break;
             case KeyEvent.VK_LEFT:
-                pacman.setCurrentDirection(Direction.LEFT);
+                pacman.setRequestedDirection(Direction.LEFT);
                 break;
             case KeyEvent.VK_RIGHT:
-                pacman.setCurrentDirection(Direction.RIGHT);
+                pacman.setRequestedDirection(Direction.RIGHT);
                 break;
         }
 

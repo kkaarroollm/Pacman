@@ -29,6 +29,12 @@ public class Pacman extends MovableGrid implements Renderable {
 
     @Override
     public void move() {
+        Direction resolvedDirection = resolveRequestedDirection();
+
+        if (resolvedDirection != null) {
+            this.setCurrentDirection(resolvedDirection);
+        }
+
         if (board.hasNoWallCollisions(this)) {
             board.eatEatables();
 
@@ -41,6 +47,35 @@ public class Pacman extends MovableGrid implements Renderable {
             }
 
             this.speed = DEFAULT_SPEED;
+        }
+    }
+
+
+    public void setRequestedDirection(Direction requestedDirection) {
+        this.requestedDirection = requestedDirection;
+    }
+
+
+    protected Direction resolveRequestedDirection() {
+        if (requestedDirection == null) {
+            return currentDirection;
+        }
+
+        boolean isAtCenter = (x % 24 == 0) && (y % 24 == 0);
+
+        if (!isAtCenter) {
+            System.out.println("Pacman is not at the center");
+            return currentDirection;
+        }
+
+        Direction previousDirection = currentDirection;
+        this.setCurrentDirection(requestedDirection);
+
+        if (board.hasNoWallCollisions(this)) {
+            return requestedDirection;
+        } else {
+            this.setCurrentDirection(previousDirection);
+            return currentDirection;
         }
     }
 

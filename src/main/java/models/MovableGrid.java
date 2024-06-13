@@ -9,6 +9,7 @@ public abstract class MovableGrid extends Grid implements Movable {
     protected int currentFrame;
     protected Direction currentDirection;
     protected Direction lastDirection;
+    protected Direction requestedDirection;
     protected Image[][] frames;
 
     public MovableGrid(int x, int y, int width, int height, int speed) {
@@ -17,6 +18,7 @@ public abstract class MovableGrid extends Grid implements Movable {
         this.currentFrame = 0;
         this.currentDirection = Direction.NONE;
         this.lastDirection = Direction.RIGHT;
+        this.requestedDirection = null;
     }
 
     public abstract void move();
