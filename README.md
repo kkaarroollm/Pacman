@@ -1,4 +1,4 @@
-## Pacman - not finished. Teacher's crazyyy
+## Pacman - not finished
 
 ## TODO
 1. Apply dijkstra/a*
